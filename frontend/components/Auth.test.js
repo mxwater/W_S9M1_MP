@@ -43,44 +43,43 @@ describe('Auth component', () => {
     await user.type(passInput, '1234')
     // ✨ assert that the input has the value entered
     expect(passInput).toHaveValue('1234')
-    
+
   })
   test('[2] Submitting form clicking button shows "Please wait..." message', async () => {
     // ✨ type whatever values on username and password inputs
     await user.type(userInput, 'gabe')
     await user.type(passInput, '1234')
-    
+
     // ✨ click the Login button
     await user.click(loginBtn)
     // ✨ assert that the "Please wait..." message is visible in the DOM
     expect(screen.getByText('Please wait...')).toBeVisible()
-    
+
   })
   test('[3] Submitting form typing [ENTER] shows "Please wait..." message', async () => {
     // ✨ type whatever values in username and password inputs
     await user.type(userInput, 'gabe')
     await user.type(passInput, '1234')
+
     // ✨ hit the [ENTER] key on the keyboard
     await user.keyboard('[ENTER]')
     // ✨ assert that the "Please wait..." message is visible in the DOM
     expect(screen.getByText('Please wait...')).toBeVisible()
-   
+
   })
   test('[4] Submitting an empty form shows "Invalid Credentials" message', async () => {
     // ✨ submit an empty form
     await user.click(loginBtn)
-   // ✨ assert that the "Invalid Credentials" message eventually is visible
+    // ✨ assert that the "Invalid Credentials" message eventually is visible
     expect(await screen.findByText('Invalid Credentials')).toBeVisible()
   })
-  
+
   test('[5] Submitting incorrect credentials shows "Invalid Credentials" message', async () => {
     // ✨ type whatever username and password and submit form
     await user.type(userInput, 'gabe')
     await user.type(passInput, '1234')
     await user.click(loginBtn)
-    
-    
-    
+
     // ✨ assert that the "Invalid Credentials" message eventually is visible
     expect(await screen.findByText('Invalid Credentials')).toBeVisible()
   })
@@ -95,43 +94,43 @@ describe('Auth component', () => {
       await user.click(loginBtn)
       await waitFor(() => {
 
-      
-      // ✨ assert that the correct welcome message is eventually visible
-      // ✨ assert that the correct user info appears is eventually visible
-      // ✨ assert that the logout button appears
-      
 
-      expect(screen.getByText(`Welcome back, ${usr.username}. We LOVE you!`)).toBeVisible()
-      expect(screen.getByText(`ID: ${usr.id}, Username: ${usr.username}, Born: ${usr.born}`)).toBeVisible()
-      expect(screen.getByText('Logout')).toBeVisible()
-     })
-     
+        // ✨ assert that the correct welcome message is eventually visible
+        // ✨ assert that the correct user info appears is eventually visible
+        // ✨ assert that the logout button appears
+
+
+        expect(screen.getByText(`Welcome back, ${usr.username}. We LOVE you!`)).toBeVisible()
+        expect(screen.getByText(`ID: ${usr.id}, Username: ${usr.username}, Born: ${usr.born}`)).toBeVisible()
+        expect(screen.getByText('Logout')).toBeVisible()
+      })
+
 
     })
-   
+
   }
   test('[7] Logging out a logged-in user displays goodbye message and renders form', async () => {
     // ✨ type valid credentials and submit
-    const {username, password} = registeredUsers[0]
+    const { username, password } = registeredUsers[0]
     await user.type(userInput, username)
     await user.type(passInput, password)
     await user.click(loginBtn)
-    
+
     // ✨ await the welcome message
     await screen.findByText(`Welcome back, ${username}. We LOVE you!`)
     // ✨ click on the logout button (grab it by its test id)
     await user.click(screen.getByTestId('logoutBtn'))
-    
+
     // ✨ assert that the goodbye message is eventually visible in the DOM
     expect(await screen.findByText('Bye! Please, come back soon.')).toBeVisible()
-    
-    
-    
+
+
+
     // ✨ assert that the form is visible in the DOM (select it by its test id)
-expect(screen.getByTestId('loginForm')).toBeVisible()
+    expect(screen.getByTestId('loginForm')).toBeVisible()
 
     // screen.debug()
-    
+
   })
 })
 
